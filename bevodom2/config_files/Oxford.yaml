@@ -1,0 +1,115 @@
+model_conf:
+  use_pretrained_model: true
+  pretrained_model_path_nclt: "./pretrained/nclt_pre.pth"
+  pretrained_model_path_oxford: "./pretrained/oxford_pre.pth"
+
+backbone_conf:
+  final_dim: [224, 384]
+  z_bound: [-5, 3, 8]
+  output_channels: 80
+  downsample_factor: 16
+  img_backbone_conf:
+    type: 'ResNet'
+    depth: 50
+    frozen_stages: 0
+    out_indices: [0, 1, 2, 3]
+    norm_eval: false
+  img_neck_conf:
+    type: 'SECONDFPN'
+    in_channels: [256, 512, 1024, 2048]
+    upsample_strides: [0.25, 0.5, 1, 2]
+    out_channels: [128, 128, 128, 128]
+  depth_net_conf:
+    in_channels: 512
+    mid_channels: 512
+
+head_conf: {}
+
+matching_conf:
+  log_dir: "/"
+  gpuid: "cuda:0"
+  cart_resolution: 0.2
+  cart_pixel_width: 256
+  networks:
+    unet:
+      bilinear: true
+      first_feature_dimension: 8
+      score_sigmoid: true
+    keypoint_block:
+      patch_size: 8
+    matcher_block:
+      softmax_temp: 0.01
+      score_comp: true
+  lr: 0.0001
+  window_size: 2
+  print_rate: 100
+  log_rate: 10
+  vis_num: 5
+  vis_keypoint_nms: 0.01
+  augmentation:
+    rot_max: 0.26
+
+training_params:
+  corr_patch_size: 11
+  use_leakyrelu_bn: false
+  use_6dof: true
+  seed: 42
+  NUM_WORKERS: 6
+  batch_size_train: 16
+  batch_size_test: 1
+  epoch_save: 1
+
+  NO_DEPTH: true
+
+  DEBUG: false
+  JUST_TEST: false
+  # JUST_TEST: true
+  # ckpt_path: "/data_wyf_nas/BEV/Model_BEV-ODOM2_ver1/Oxford.pth"
+
+  feature_size: 128
+  division: 0.8
+  matched_depth: true
+  dataset_type: "oxford"
+  dataset_item_range: "0.0-3.0"
+  pickle_name: "pickle_d0_d3_r15_r45_bi.txt"
+  featuresize_before_corr: "32*32_corr11"
+  max_dis: 4.0
+  
+  IS_MONO: true
+  IS_MONO_CUT: true
+
+  freeze_bev: true
+  freeze_steps: 2000
+
+  other_downsample_factor: 16
+
+  USE_PICKLE: false
+  ALL_DATA_INPUT: true
+  FREEZE_BEV: false
+  NO_BN: false
+  USE_TRAIN_EVAL: true
+  NO_WEIGHT_SCORES: false
+  USE_R_ENHANCE: false
+  max_norm: 1.0
+  USE_GRAD_CLIP: false
+  USE_MORE_SEQUENCES: true
+  USE_REVERSE: false
+  depthloss_rate: 1
+  pvloss_rate: 0.2
+  USE_TEST_DIS_THRES: false
+  TEST_DIS_THRES: 1
+  SPLIT_R_t: false
+
+  lr_start: 0.0001
+
+  output_root: "./outputs"
+  data_root_nclt: "/data/wyf/NCLT/format_data"
+  data_root_oxford: "/data/wyf/oxford"
+  data_root_kitti: "/data/wyf/kitti"
+  data_root_zjh: "/home/wyf/data_ssd/NingBo/bag_data"
+  pickle_root_nclt: "/home/wyf/BEV/NCLT_pickle"
+  pickle_root_oxford: "/home/wyf/BEV/oxford_pickle"
+  pickle_root_kitti: "/home/wyf/BEV/kitti_pickle"
+  pickle_root_zjh: "/home/wyf/BEV/NingBo_pickle"
+  
+  wrap_level_num: 1

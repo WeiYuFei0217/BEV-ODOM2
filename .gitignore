@@ -1,0 +1,52 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+*.egg-info/
+*.egg
+dist/
+build/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Pre-trained model weights
+*.pth
+*.pt
+*.ckpt
+
+# Training outputs
+bevodom2/train_model/outputs/
+bevodom2/outputs/
+outputs/
+
+# TensorBoard logs
+**/log_*/
+**/events.out.tfevents.*
+
+# Pickle cache
+*.pkl
+!bevodom2/train_model/pretrained/.gitkeep
