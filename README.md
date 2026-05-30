@@ -29,7 +29,7 @@ English | [中文](README_CN.md)
 </p>
 <p align="center"><i>Comparison of BEV-based monocular visual odometry approaches. Previous BEV MVO methods require extra sensors/annotations for dense supervision, while BEV-ODOM uses only sparse pose labels. BEV-ODOM2 (Ours) achieves dense supervision without extra annotations through PV-BEV dual-branch fusion and BEV optical flow.</i></p>
 
-Bird's-Eye-View (BEV) representation offers a metric-scaled planar workspace, facilitating the simplification of 6-DoF ego-motion to a more robust 3-DoF model for monocular visual odometry (MVO) in intelligent transportation systems. However, existing BEV methods suffer from **sparse supervision signals** and **information loss** during perspective-to-BEV projection.
+Autonomous ground vehicles operating across suburban and urban roads, campus environments, and GNSS-denied building interiors require accurate, scale-consistent ego-motion estimation. Bird's-Eye-View (BEV) representation naturally addresses the scale drift problem by providing a metric-scaled planar workspace, facilitating the simplification of 6-DoF ego-motion to a more robust 3-DoF model for monocular visual odometry (MVO). However, existing BEV methods suffer from **sparse supervision signals** and **information loss** during perspective-to-BEV projection.
 
 **BEV-ODOM2** is an enhanced framework addressing both limitations without additional annotations. Our approach introduces:
 
@@ -195,19 +195,6 @@ All model files can be downloaded from: [Baidu Cloud](https://pan.baidu.com/s/1b
 |---------|------------------------------|-------------|
 | NCLT | ✅ Included | ✅ Included |
 | Oxford | ✅ Included | ✅ Included |
-
-## Citation
-
-If you find this work useful, please consider citing:
-
-```bibtex
-@article{wei2025bevodom2,
-  title={BEV-ODOM2: Enhanced BEV-based Monocular Visual Odometry with PV-BEV Fusion and Dense Flow Supervision for Ground Robots},
-  author={Wei, Yufei and Lu, Wangtao and Lu, Sha and Hu, Chenxiao and Han, Fuzhang and Xiong, Rong and Wang, Yue},
-  journal={IEEE Transactions on Intelligent Transportation Systems},
-  year={2025}
-}
-```
 
 ## Acknowledgements
 
