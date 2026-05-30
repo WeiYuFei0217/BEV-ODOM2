@@ -2,12 +2,6 @@
 
 **BEV-ODOM2: Enhanced BEV-based Monocular Visual Odometry with PV-BEV Fusion and Dense Flow Supervision for Ground Robots**
 
-English | [中文](README_CN.md)
-
-![![arXiv](https://img.shields.io/badge/arXiv-BEV--ODOM2-red)](https://arxiv.org/)
-![![Project](https://img.shields.io/badge/Project-BEV--ODOM2-blue)](https://github.com/WeiYuFei0217/BEV-ODOM2)
-![![ZJH-VO Dataset](https://img.shields.io/badge/Dataset-ZJH--VO-green)](https://github.com/WeiYuFei0217/ZJH-VO-Dataset/)
-
 ## Table of Contents
 
 - [Introduction](#introduction)
