@@ -1,0 +1,62 @@
+# BEV-ODOM2 Oxford Radar RobotCar config. Relative paths are resolved from the working directory (run from the repository root).
+dataset_type: "oxford"
+data_root: "/path/to/oxford"
+pair_root: "./pairs/Oxford"   # pair lists: <pair_root>/<sequence>/<pair_file>
+output_root: "./outputs"
+
+backbone_conf:
+  final_dim: [320, 640]
+  x_bound: [-51.2, 51.2, 0.8]   # 128 x 128 BEV grid, 0.8 m per cell
+  y_bound: [-51.2, 51.2, 0.8]
+  z_bound: [-5, 3, 8]
+  d_bound: [2.0, 30, 0.25]
+  output_channels: 80
+  downsample_factor: 16
+  img_backbone_conf:
+    type: 'ResNet'
+    depth: 50
+    frozen_stages: 0
+    out_indices: [0, 1, 2, 3]
+    norm_eval: false
+  img_neck_conf:
+    type: 'SECONDFPN'
+    in_channels: [256, 512, 1024, 2048]
+    upsample_strides: [0.25, 0.5, 1, 2]
+    out_channels: [128, 128, 128, 128]
+  depth_net_conf:
+    in_channels: 512
+    mid_channels: 512
+
+model_conf:
+  corr_patch_size: 11
+  use_leakyrelu_bn: false
+  max_dis: 4.0   # translation output bound (m)
+
+train_conf:
+  seed: 42
+  num_workers: 6
+  batch_size: 16   # on a single GPU
+  max_epochs: 100
+  lr: 0.0001
+  lr_decay: 0.95   # per-epoch exponential decay
+  weight_decay: 0.0001
+  # loss weights: lambda_1 (5-DoF PV loss), lambda_2 (flow loss), alpha (3-DoF rotation), beta (5-DoF rotation)
+  lambda_5dof: 0.2
+  lambda_flow: 0.1
+  alpha: 10
+  beta: 10
+  # backbone initialization; the loaded parameters are frozen for the first freeze_epochs epochs
+  pretrained: "pretrained/bevodom2_oxford_init.pth"
+  freeze_epochs: 1
+  train_sequences: ["2019-01-11-13-24-51", "2019-01-14-14-15-12", "2019-01-15-14-24-38"]
+  # enhanced rotation sampling (tools/gen_pairs.py): time window (s), max translation (m), yaw range of S_high (deg)
+  pair_window_s: 60
+  pair_max_dist: 3.0
+  pair_high_rot_deg: [15, 45]
+  pair_file: "pairs_w60s_d3_r15_r45.pkl"
+
+eval_conf:
+  # the checkpoint with the lowest mean validation RTE is kept as best.pth
+  val_sequences: ["2019-01-11-14-02-26", "2019-01-15-13-53-14", "2019-01-16-13-42-28", "2019-01-17-13-26-39"]
+  test_sequences: ["2019-01-11-12-26-55", "2019-01-15-13-06-37", "2019-01-16-14-15-33", "2019-01-17-12-48-25"]
+  frame_stride: 5   # val/test use every frame_stride-th frame
